@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make your own Drink</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container-md">
+        <form method = "post">
+        <div class="row">
+            <div class="col-3">
+
+                <select class="form-control aria-label="Default select example" name="searchBy" id="Choice"  onchange=changeOtherSelect(this.value)>
+                    <option value="" disabled selected>Select Your choice</option>
+                    <option value="1">Choice of Drink</option>
+                    <option value="2">Choice of Ingredient</option>
+                    
+                  </select>
+</div>
+                <div class="col-3">
+                      <select name="choiceMade" id="choiceMade" class="form-control aria-label="Default select example">
+                    <option value="" disabled selected>Select</option>
+                </select>  
+   
+                                <script type="text/javascript">
+    
+                   function changeOtherSelect(value){ 
+                   
+                        if (value.length == 0) document.getElementById("choice").innerHTML = "<option></option>"; 
+           else { 
+            
+ 
+
+            let drinks = '<%- JSON.stringify(data.drinkChoice) %>';
+            let drinkChoice = JSON.parse(drinks);
+
+            
+            const ingredients= '<%- JSON.stringify(data.ingredientList) %>';
+            let ingredientList = JSON.parse(ingredients);
+            
+            let catOptions ="<option>None</option>";
+            
+                 if (value == "1"){ 
+                        for(var i =0; i < drinkChoice.length; i++){ 
+                          
+                               catOptions += "<option>" + drinkChoice[i].strAlcoholic + "</option>"; 
+                           } 
+                           document.getElementById("choiceMade").innerHTML = catOptions; 
+                       }else if (value == "2"){ 
+                             for(var i =0; i < ingredientList.length; i++){ 
+                                 catOptions += "<option>" + ingredientList[i].strIngredient1 + "</option>"; 
+                            } 
+document.getElementById("choiceMade").innerHTML = catOptions; 
+                            } 
+
+                             
+                        } 
+                        } 
+                
+
+                        </script>
+
+            </div>
+
+            <div class="col-2">
+                <button type="submit" class="btn btn-outline-secondary" formaction="/makeDrink">Make Drink</button>
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-outline-secondary" formaction="/randomDrink">Surprise Drink</button>
+            </div>
+        </div>
+    </form>
+    </div> 
+
+
+
+
+    <% if (locals.data.drinkName){ %>
+    <div class="container">
+    <div class="p-5 mb-4 bg-light rounded-3 mt-3">
+        <div class="container-fluid py-1">
+              
+          <h1 class="display-5 fw-bold"><%= data.drinkName %></h1>  
+        
+          <h2 class="display-8 fw-bold">Instructions</h2>
+          <p><%= data.instructions %></p>
+        </div>
+      </div>
+
+      <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+          <div class="h-100 p-5 text-bg-dark rounded-3">
+            <h2 class="display-8 fw-bold">Ingredients</h2>
+            
+             <p class="col-md-8 fs-4">
+            <ul class="list-group">
+              <% data.ingredients.forEach(ingredient => { %>
+    <li class="list-group-item"><%= ingredient %></li>
+<% }); %>
+
+              </ul>
+          </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="h-100 p-5 bg-light border rounded-3">
+            <p><img src="<%= data.image %>" alt="Image of drink" height="100%" width="100%"/></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<% } %>
+</body>
+</html>

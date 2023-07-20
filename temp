@@ -1,0 +1,35 @@
+                <script>
+    
+                   function changeOtherSelect(value){ 
+                   
+                        if (value.length == 0) document.getElementById("choice").innerHTML = "<option></option>"; 
+           else { 
+            
+ 
+
+            let drinkChoice = "<%= JSON.stringify(data.drinkChoice) %>";
+            
+            console.log(drinkChoice);
+            console.log("<%= (locals.data.drinkChoice) %>");
+            const ingredientList = "<%= data.ingredientList %>";
+            console.log(value);
+            // console.log(drinkChoice);
+            let catOptions ="";
+            // console.log(ingredientList);
+                 if (value === "1" & drinkChoice){ 
+                        for(var i =0; i < drinkChoice.length; i++){ 
+                               catOptions += "<option>" + drinkChoice[i] + "</option>"; 
+                           } 
+                           document.getElementById("choiceMade").innerHTML = catOptions; 
+                       }else if (value === "2" & ingredientList){ 
+                             for(var i =0; i < ingredientList.length; i++){ 
+                                 catOptions += "<option>" + data.ingredientList[i] + "</option>"; 
+                            } 
+                            } 
+
+                             document.getElementById("choiceMade").innerHTML = catOptions; 
+                        } 
+                        } 
+                
+
+                        </script>
